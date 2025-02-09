@@ -1638,6 +1638,7 @@ public:
         fprintf(stderr, "Signal process begin\n" );
         clear_sve_signals_in_a_region();//S1
         if(ONT_bamFileName != NULL){//handle ONT dataset
+        	return;
         	bool print_log = true;
         	result_TGS_middle.clear();
         	result_TGS_clip.clear();
@@ -1722,13 +1723,14 @@ public:
 			result_NGS_BND.clear(); //store the result for the INV and the BNDs
 			result_BGS_INV.clear();
 			//calling SVs using NGS reads
-        	if(CCS_bamFileName != NULL){//DEBUG mode: when with CCS dataset, run in simple mode ,30X, simple merge:
-        		const char * vcf_fn = NULL;
-        		if(false) vcf_fn = "/home/user/zhanganqi/gyli/GC_SV2_1/CALL/HG002_30X.bench.vcf";
-        		else     vcf_fn = "/home/user/zhanganqi/gyli/GC_SV2_1/CALL/HG002_60X.bench.vcf";
-        		debug_code_load_SVs_from_vcf_f(result_NGS_INDEL, vcf_fn, ref);
-        	}
-        	else{  //pure NGS mode: truly handle NGS reads
+//        	if(CCS_bamFileName != NULL){//DEBUG mode: when with CCS dataset, run in simple mode ,30X, simple merge:
+//        		const char * vcf_fn = NULL;
+//        		if(false) vcf_fn = "/home/user/zhanganqi/gyli/GC_SV2_1/CALL/HG002_30X.bench.vcf";
+//        		else     vcf_fn = "/home/user/zhanganqi/gyli/GC_SV2_1/CALL/HG002_60X.bench.vcf";
+//        		debug_code_load_SVs_from_vcf_f(result_NGS_INDEL, vcf_fn, ref);
+//        	}
+//        	else
+        	{  //pure NGS mode: truly handle NGS reads
                 //get signals from NGS CRAM
                 GET_NGS_SIGNALS_FROM_READs();//S2:load reads and get signals
                 //not used right now
