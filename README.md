@@ -74,7 +74,7 @@ Preprocess alignment data using `ngs_trans_reads` to reduce I/O demands and acce
 
 Region-specific detection SV (chrX: 11,500,000–18,500,000)
 ```bash
-> gcSV call -S 22 -E 22 -s 11500000 -F 18500000 -n Ill_input.bam -r ref.fa -o output.vcf 2> /dev/null
+> gcSV call -S 22 -E 22 -s 11500000 -F 18500000 -n Ill_input.bam -I ref.stat.txt -r ref.fa -o output.vcf 2> /dev/null
 ```
 
 ### 3. Hybrid SV detection by combining low-depth LRS data with SRS data
@@ -113,16 +113,12 @@ This approach works for all analysis types (pure LRS, pure SRS, hybrid).
 
 Optional flags to optimize output for specific use cases (e.g., contig reconstruction):
 
-
- `--random_phasing` or `-f`, Randomly phasing all SVs randomly (0/1-->0|1 or 1|0; 1/1-->1|1)
- `--Small_var` or  `-v` 
-
 The `--random_phasing` or `-f` parameter is used to perform random phasing (0/1-->0|1 or 1|0 randomly; 1/1-->1|1) on variants, and heterozygous variants located on the same local haplotype will share the same random phasing result.
 The `--Small_var` or  `-v`  parameter can output small variants (SNPs or INDELs) that are on the same local haplotype as the SV.
 
 ## Demo
 
-The demo data provides a segment (1:869000-870000) from the HG002 real dataset of GIAB, including HiFi data (average 10x depth) and Illumina data (average 60x depth).
+The demo data provides a segment (1:869000-870000) from the HG002 real dataset of GIAB, including demo Pacbio HiFi dataset (average 10x depth) and demo Illumina data (average 60x depth).
 
 Due to the small size of the demo data, it is not possible to effectively calculate the insert size distribution for the Illumina dataset. Therefore, an additional file, `SRS_HG002_stat.json`, is provided to indicate the depth and insert size distribution statistics of the Illumina dataset (-T SRS_HG002_stat.json). In general usage scenarios (e.g., WGS), this file or parameter do not need to be provided.
 
