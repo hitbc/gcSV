@@ -68,6 +68,7 @@ Preprocess alignment data using `ngs_trans_reads` to reduce I/O demands and acce
 > gcSV ngs_fa_stat ref.fa > ref.stat.txt
 > gcSV ngs_trans_reads ref.fa Ill_input.bam TL.bam 
 > samtools sort --output-fmt=BAM -o TL.sort.bam TL.bam
+> samtools index TL.sort.bam
 > gcSV call -n Ill_input.bam -L TL.sort.bam -r ref.fa -I ref.stat.txt -o output.vcf 2> /dev/null
 ```
 
