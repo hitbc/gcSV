@@ -23,7 +23,7 @@ gcSV provides pre-compiled statically linked binaries. Use the following command
 
 ### 1: Get statically linked binaries
 ```bash
-> wget https://github.com/hitbc/gcSV/gcSV_release_v1.0.0
+> wget https://github.com/hitbc/gcSV/blob/main/gcSV_release_v1.0.0
 > ./gcSV_release_v1.0.0 --help
 ```
 
