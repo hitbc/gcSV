@@ -31,7 +31,7 @@ gcSV provides pre-compiled statically linked binaries. Use the following command
 ### 2: Compile from source code
 ```bash
 > git clone https://github.com/hitbc/gcSV/
-> cd ./Release
+> cd ./gcSV/Release
 > make clean
 > make all -j 12
 > ./gcSV --help
