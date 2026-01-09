@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2012-2013 Genome Research Ltd.
-Author: James Bonfield <jkb@sanger.ac.uk>
+Copyright (c) 2009 Genome Research Ltd.
+Author: Rob Davies <rmd@sanger.ac.uk>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -28,34 +28,39 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/*! \file
- * CRAM interface.
- *
- * Consider using the higher level hts_*() API for programs that wish to
- * be file format agnostic (see htslib/hts.h).
- *
- * This API should be used for CRAM specific code. The specifics of the
- * public API are implemented in cram_io.h, cram_encode.h and cram_decode.h
- * although these should not be included directly (use this file instead).
- */
+#ifndef _POOLED_ALLOC_H_
+#define _POOLED_ALLOC_H_
 
-#ifndef _CRAM_H_
-#define _CRAM_H_
+#include <stddef.h>
 
-#include "cram/cram_samtools.h"
-#include "cram/sam_header.h"
-#include "cram_structs.h"
-#include "cram_io.h"
-#include "cram_encode.h"
-#include "cram_decode.h"
-#include "cram_stats.h"
-#include "cram_codecs.h"
-#include "cram_index.h"
-
-// Validate against the external cram.h,
-//
-// This contains duplicated portions from cram_io.h and cram_structs.h,
-// so we want to ensure that the prototypes match.
-#include "htslib/cram.h"
-
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+/*
+ * Implements a pooled block allocator where all items are the same size,
+ * but we need many of them.
+ */
+typedef struct {
+    void   *pool;
+    size_t  used;
+} pool_t;
+
+typedef struct {
+    size_t dsize;
+    size_t psize;
+    size_t npools;
+    pool_t *pools;
+    void *free;
+} pool_alloc_t;
+
+pool_alloc_t *pool_create(size_t dsize);
+void pool_destroy(pool_alloc_t *p);
+void *pool_alloc(pool_alloc_t *p);
+void pool_free(pool_alloc_t *p, void *ptr);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /*_POOLED_ALLOC_H_*/

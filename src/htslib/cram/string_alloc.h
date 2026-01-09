@@ -1,6 +1,6 @@
 /*
-Copyright (c) 2012-2013 Genome Research Ltd.
-Author: James Bonfield <jkb@sanger.ac.uk>
+Copyright (c) 2010 Genome Research Ltd.
+Author: Andrew Whitwham <aw7@sanger.ac.uk>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -28,34 +28,41 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/*! \file
- * CRAM interface.
+#ifndef _STRING_ALLOC_H_
+#define _STRING_ALLOC_H_
+
+#include <stdlib.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*
+ * A pooled string allocator intended to cut down on the
+ * memory overhead of many small string allocations.
  *
- * Consider using the higher level hts_*() API for programs that wish to
- * be file format agnostic (see htslib/hts.h).
- *
- * This API should be used for CRAM specific code. The specifics of the
- * public API are implemented in cram_io.h, cram_encode.h and cram_decode.h
- * although these should not be included directly (use this file instead).
+ * Andrew Whitwham, September 2010.
  */
 
-#ifndef _CRAM_H_
-#define _CRAM_H_
+typedef struct {
+    char *str;
+    size_t used;
+} string_t;
 
-#include "cram/cram_samtools.h"
-#include "cram/sam_header.h"
-#include "cram_structs.h"
-#include "cram_io.h"
-#include "cram_encode.h"
-#include "cram_decode.h"
-#include "cram_stats.h"
-#include "cram_codecs.h"
-#include "cram_index.h"
+typedef struct {
+    size_t max_length;
+    size_t nstrings;
+    string_t *strings;
+} string_alloc_t;
 
-// Validate against the external cram.h,
-//
-// This contains duplicated portions from cram_io.h and cram_structs.h,
-// so we want to ensure that the prototypes match.
-#include "htslib/cram.h"
+string_alloc_t *string_pool_create(size_t max_length);
+void string_pool_destroy(string_alloc_t *a_str);
+char *string_alloc(string_alloc_t *a_str, size_t length);
+char *string_dup(string_alloc_t *a_str, char *instr);
+char *string_ndup(string_alloc_t *a_str, char *instr, size_t len);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
