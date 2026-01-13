@@ -221,12 +221,12 @@ Refer to "cohort_csv_analysis.md" for the complete workflow.
 2. Contig sequence RM and TRF annotation;
 3. SV-TR array detection;
 
-Refer to "py/科研-MEI阵列-单样本检测.py" (科研-MEI阵列-单样本检测.py translates to: Research-MEI Array-Single Sample Detection.py) for the complete workflow.
+Refer to "py/mei_tr_array_single_region_detection.py" for the complete workflow.
 
 Based on workflow 7.1, obtain the variant annotation results from repeat Masker: [region].fa.out, then execute:
 
 ```bash
-python3 ./py/科研-MEI阵列-单样本检测.py region.fa.out
+python3 ./py/mei_tr_array_single_region_detection.py region.fa.out
 ```
 
 #### 7.3 Population Sample Complex Structural Variant Region - Nested Variant Detection
@@ -260,3 +260,4 @@ gcSV call -S 0 -E 0 -s 0 -F 1000000 -T SRS_HG002_stat.json -r  hs37d5_1_0_100000
 ## License
 
 This project is protected by the [GNU GPL v3](LICENSE) license.
+
