@@ -223,12 +223,12 @@ gcSV call -B BED -b region.bed -l sample.ASM.bam -r ref.fa -o output.bed 2> /dev
 2. contig 序列 RM、TRF注释；
 3. SV-TR阵列检测；
 
-完整的工作流程 参阅“py/科研-MEI阵列-单样本检测.py”。
+完整的工作流程 参阅“py/mei_tr_array_single_region_detection.py”。
 
 基于流程7.1, 获取 repeat Masker的变异注释结果： [region].fa.out，然后执行：
 
 ```bash
-python3 ./py/科研-MEI阵列-单样本检测.py region.fa.out
+python3 ./py/mei_tr_array_single_region_detection.py region.fa.out
 ```
 
 #### 7.3 群体样本复杂结构变异区域-嵌套变异检测
